@@ -1,0 +1,25 @@
+{"database":"comp3123_assignment1","level":"info","message":"MongoDB connected","timestamp":"2026-10-18T18:33:23.359Z"}
+{"environment":"development","level":"info","message":"Server started on port 3000","timestamp":"2026-10-18T18:33:23.363Z"}
+{"duration_ms":3,"ip":"::1","level":"info","message":"HTTP request","method":"GET","path":"/health","status":200,"timestamp":"2026-10-18T18:36:07.758Z"}
+{"database":"comp3123_assignment1","level":"info","message":"MongoDB connected","timestamp":"2026-10-18T18:50:25.785Z"}
+{"environment":"development","level":"info","message":"Server started on port 3000","timestamp":"2026-10-18T18:50:25.790Z"}
+{"level":"warn","message":"Request error Route POST /api/v1/user/signup not found","path":"/api/v1/user/signup","status":404,"timestamp":"2026-10-18T18:55:54.047Z"}
+{"duration_ms":5,"ip":"::1","level":"warn","message":"HTTP request","method":"POST","path":"/api/v1/user/signup","status":404,"timestamp":"2026-10-18T18:55:54.052Z"}
+{"database":"comp3123_assignment1","level":"info","message":"MongoDB connected","timestamp":"2026-10-18T18:57:15.388Z"}
+{"environment":"development","level":"info","message":"Server started on port 3000","timestamp":"2026-10-18T18:57:15.397Z"}
+{"database":"comp3123_assignment1","level":"info","message":"MongoDB connected","timestamp":"2026-10-18T18:57:48.981Z"}
+{"environment":"development","level":"info","message":"Server started on port 3000","timestamp":"2026-10-18T18:57:48.985Z"}
+{"database":"comp3123_assignment1","level":"info","message":"MongoDB connected","timestamp":"2026-10-18T18:57:59.575Z"}
+{"environment":"development","level":"info","message":"Server started on port 3000","timestamp":"2026-10-18T18:57:59.587Z"}
+{"level":"info","message":"User registered","timestamp":"2026-10-18T18:58:07.193Z","user_id":"6ad516be1bfe3dc426404a9a"}
+{"duration_ms":334,"ip":"::1","level":"info","message":"HTTP request","method":"POST","path":"/api/v1/user/signup","status":201,"timestamp":"2026-10-18T18:58:07.201Z"}
+{"level":"info","message":"User registered","timestamp":"2026-10-18T19:00:05.408Z","user_id":"6ad517351bfe3dc426404a9b"}
+{"duration_ms":330,"ip":"::1","level":"info","message":"HTTP request","method":"POST","path":"/api/v1/user/signup","status":201,"timestamp":"2026-10-18T19:00:05.410Z"}
+{"field":"Username","level":"warn","message":"Signup rejected: duplicate","timestamp":"2026-10-18T19:01:31.737Z"}
+{"level":"warn","message":"Request error Username already exists","path":"/api/v1/user/signup","status":409,"timestamp":"2026-10-18T19:01:31.738Z"}
+{"duration_ms":40,"ip":"::1","level":"warn","message":"HTTP request","method":"POST","path":"/api/v1/user/signup","status":409,"timestamp":"2026-10-18T19:01:31.739Z"}
+{"database":"comp3123_assignment1","level":"info","message":"MongoDB connected","timestamp":"2026-10-18T19:09:10.502Z"}
+{"environment":"development","level":"info","message":"Server started on port 3000","timestamp":"2026-10-18T19:09:10.506Z"}
+{"level":"info","message":"Login successful","timestamp":"2026-10-18T19:10:00.779Z","user_id":"6ad516be1bfe3dc426404a9a"}
+{"duration_ms":749,"ip":"::1","level":"info","message":"HTTP request","method":"POST","path":"/api/v1/user/login","status":200,"timestamp":"2026-10-18T19:10:00.789Z"}
+{"level":"info","message":"Login successful","timestamp":"2026-10-18T19:10:55.420Z","user_id":"6ad517351bfe3dc426404a9b"}

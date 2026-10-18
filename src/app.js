@@ -6,6 +6,7 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 const { apiLimiter } = require('./middleware/rateLimiter');
 const healthRoutes = require('./routes/health.routes');
 const userRoutes = require('./routes/user.routes');
+const employeeRoutes = require('./routes/employee.routes');
 
 const app = express();
 
@@ -31,7 +32,7 @@ app.use(async (req, res, next) => {
 
 app.use('/api', apiLimiter);
 app.use('/api/v1/user', userRoutes);
-// Stage 3: employee routes go here
+app.use('/api/v1/emp', employeeRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

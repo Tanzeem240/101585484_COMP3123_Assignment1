@@ -1,0 +1,347 @@
+{
+  "info": {
+    "name": "COMP3123 Assignment 1",
+    "description": "COMP3123 Assignment 1 - Secure Employee Management REST API. Run Signup/Login first so tokens are stored in collection variables. Change base_url to the Vercel URL to test the deployed API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000" },
+    { "key": "tokenA", "value": "" },
+    { "key": "tokenB", "value": "" },
+    { "key": "empA", "value": "" },
+    { "key": "empB", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": { "method": "GET", "url": "{{base_url}}/health" }
+        },
+        {
+          "name": "Unknown Route (404)",
+          "request": { "method": "GET", "url": "{{base_url}}/api/v1/abc" }
+        }
+      ]
+    },
+    {
+      "name": "User - Signup",
+      "item": [
+        {
+          "name": "Signup – User A",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"usera\", \"email\": \"usera@test.com\", \"password\": \"Password123\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/signup"
+          }
+        },
+        {
+          "name": "Signup – User B",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"userb\", \"email\": \"userb@test.com\", \"password\": \"Password123\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/signup"
+          }
+        },
+        {
+          "name": "Signup – Duplicate Username (409)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"usera\", \"email\": \"new@test.com\", \"password\": \"Password123\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/signup"
+          }
+        },
+        {
+          "name": "Signup – Duplicate Email (409)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"newuser\", \"email\": \"usera@test.com\", \"password\": \"Password123\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/signup"
+          }
+        },
+        {
+          "name": "Signup – Invalid Email (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"userc\", \"email\": \"notanemail\", \"password\": \"Password123\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/signup"
+          }
+        },
+        {
+          "name": "Signup – Weak Password (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"userc\", \"email\": \"userc@test.com\", \"password\": \"abc\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/signup"
+          }
+        },
+        {
+          "name": "Signup – Missing Fields (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/signup"
+          }
+        },
+        {
+          "name": "Signup – Malformed JSON (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"userc\",", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/signup"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User - Login",
+      "item": [
+        {
+          "name": "Login – User A (username)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 200) { pm.collectionVariables.set(\"tokenA\", pm.response.json().token); }"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"usera\", \"password\": \"Password123\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/login"
+          }
+        },
+        {
+          "name": "Login – User B (email)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 200) { pm.collectionVariables.set(\"tokenB\", pm.response.json().token); }"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"email\": \"userb@test.com\", \"password\": \"Password123\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/login"
+          }
+        },
+        {
+          "name": "Login – Wrong Password (401)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"username\": \"usera\", \"password\": \"WrongPass999\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/login"
+          }
+        },
+        {
+          "name": "Login – Missing Credentials (400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/user/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees - CRUD",
+      "item": [
+        {
+          "name": "Create Employee – User A",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set(\"empA\", pm.response.json().employee_id); }"] } }],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{tokenA}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"position\": \"Developer\",\n  \"salary\": 75000,\n  \"date_of_joining\": \"2025-08-01\",\n  \"department\": \"IT\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Create Employee – User B",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 201) { pm.collectionVariables.set(\"empB\", pm.response.json().employee_id); }"] } }],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{tokenB}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"Sara\",\n  \"last_name\": \"Khan\",\n  \"email\": \"sara.khan@company.com\",\n  \"position\": \"Designer\",\n  \"salary\": 68000,\n  \"date_of_joining\": \"2025-09-15\",\n  \"department\": \"Design\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Get All Employees – User A",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{tokenA}}" }],
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Get Employee by ID – User A",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{tokenA}}" }],
+            "url": "{{base_url}}/api/v1/emp/employees/{{empA}}"
+          }
+        },
+        {
+          "name": "Update Employee – User A",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{tokenA}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{ \"salary\": 80000, \"position\": \"Senior Developer\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees/{{empA}}"
+          }
+        },
+        {
+          "name": "Delete Employee – User A (204)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{tokenA}}" }],
+            "url": "{{base_url}}/api/v1/emp/employees?eid={{empA}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees - Ownership (403)",
+      "item": [
+        {
+          "name": "User A GET User B Employee (403)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{tokenA}}" }],
+            "url": "{{base_url}}/api/v1/emp/employees/{{empB}}"
+          }
+        },
+        {
+          "name": "User A UPDATE User B Employee (403)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{tokenA}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{ \"salary\": 1 }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees/{{empB}}"
+          }
+        },
+        {
+          "name": "User A DELETE User B Employee (403)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{tokenA}}" }],
+            "url": "{{base_url}}/api/v1/emp/employees?eid={{empB}}"
+          }
+        },
+        {
+          "name": "User B GET User A Employee (403)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{tokenB}}" }],
+            "url": "{{base_url}}/api/v1/emp/employees/{{empA}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees - Errors",
+      "item": [
+        {
+          "name": "Create Employee – Missing Fields (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{tokenA}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{ \"first_name\": \"Test\" }", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Create Employee – Invalid Email (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{tokenA}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"bademail\",\n  \"position\": \"Developer\",\n  \"salary\": 75000,\n  \"date_of_joining\": \"2025-08-01\",\n  \"department\": \"IT\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Create Employee – Invalid Salary (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{tokenA}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"position\": \"Developer\",\n  \"salary\": -500,\n  \"date_of_joining\": \"2025-08-01\",\n  \"department\": \"IT\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Create Employee – Invalid Date (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{tokenA}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"position\": \"Developer\",\n  \"salary\": 75000,\n  \"date_of_joining\": \"notadate\",\n  \"department\": \"IT\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Create Employee – Missing Token (401)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"position\": \"Developer\",\n  \"salary\": 75000,\n  \"date_of_joining\": \"2025-08-01\",\n  \"department\": \"IT\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Create Employee – Invalid Token (401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer abc.def.ghi" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"john.doe@company.com\",\n  \"position\": \"Developer\",\n  \"salary\": 75000,\n  \"date_of_joining\": \"2025-08-01\",\n  \"department\": \"IT\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{base_url}}/api/v1/emp/employees"
+          }
+        },
+        {
+          "name": "Get Employee – Invalid ID (400)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{tokenA}}" }],
+            "url": "{{base_url}}/api/v1/emp/employees/123"
+          }
+        },
+        {
+          "name": "Get Employee – Not Found (404)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{tokenA}}" }],
+            "url": "{{base_url}}/api/v1/emp/employees/6ad51e486a3f7cb7d7ad8b5c"
+          }
+        }
+      ]
+    }
+  ]
+}

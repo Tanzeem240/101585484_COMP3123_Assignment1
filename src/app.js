@@ -3,7 +3,9 @@ const helmet = require('helmet');
 const { connectDB } = require('./config/db');
 const requestLogger = require('./middleware/requestLogger');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
+const { apiLimiter } = require('./middleware/rateLimiter');
 const healthRoutes = require('./routes/health.routes');
+const userRoutes = require('./routes/user.routes');
 
 const app = express();
 
@@ -27,7 +29,8 @@ app.use(async (req, res, next) => {
   }
 });
 
-// Stage 2: user routes go here
+app.use('/api', apiLimiter);
+app.use('/api/v1/user', userRoutes);
 // Stage 3: employee routes go here
 
 app.use(notFound);
